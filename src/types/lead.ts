@@ -8,6 +8,7 @@ export interface Lead {
   industry: Industry;
   annual_revenue: AnnualRevenue | null;
   contact_name: string;
+  food_category: string | null;
   position: string | null;
   email: string;
   phone: string;
@@ -28,17 +29,17 @@ export interface Lead {
 }
 
 export type Industry =
-  | "processed_food"
-  | "beverage"
-  | "health_food"
-  | "traditional_food"
-  | "other";
+  | "가공식품"
+  | "음료"
+  | "건강식품"
+  | "전통식품"
+  | "기타";
 
 export type AnnualRevenue =
-  | "under_1b"
-  | "1b_to_5b"
-  | "5b_to_10b"
-  | "over_10b";
+  | "10억 미만"
+  | "10억 ~ 50억"
+  | "50억 ~ 100억"
+  | "100억 이상";
 
 export type TargetCountry = "us" | "jp" | "cn" | "sea" | "eu" | "other";
 
@@ -58,6 +59,7 @@ export interface LeadFormData {
   industry: Industry;
   annual_revenue?: AnnualRevenue;
   contact_name: string;
+  food_category?: string;
   position?: string;
   email: string;
   phone: string;

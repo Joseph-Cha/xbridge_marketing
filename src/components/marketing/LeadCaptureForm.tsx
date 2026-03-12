@@ -31,6 +31,7 @@ import {
   ANNUAL_REVENUE_OPTIONS,
   TARGET_COUNTRY_OPTIONS,
   EXPORT_EXPERIENCE_OPTIONS,
+  FOOD_CATEGORY_OPTIONS,
 } from "@/constants/form-options";
 import { leadSchema, type LeadFormValues } from "@/lib/validations";
 import { fadeInUp, staggerContainer } from "@/lib/animations";
@@ -74,6 +75,7 @@ export default function LeadCaptureForm() {
     resolver: zodResolver(leadSchema),
     defaultValues: {
       target_countries: [],
+      export_experience: "" as unknown as undefined,
       privacy_consent: false as unknown as true,
       marketing_consent: false,
     },
@@ -215,6 +217,58 @@ export default function LeadCaptureForm() {
                 )}
               </div>
 
+              <div className="grid gap-4 sm:grid-cols-2">
+                <div>
+                  <Label htmlFor="business_number">사업자등록번호</Label>
+                  <Input
+                    id="business_number"
+                    placeholder="000-00-00000"
+                    {...register("business_number")}
+                    onChange={(e) => {
+                      const formatted = formatBusinessNumber(e.target.value);
+                      setValue("business_number", formatted);
+                    }}
+                    onBlur={() => trigger("business_number")}
+                    className="mt-1"
+                  />
+                  {errors.business_number && (
+                    <p className="mt-1 text-sm text-[#EF4444]">
+                      {errors.business_number.message}
+                    </p>
+                  )}
+                </div>
+
+                <div>
+                  <Label htmlFor="contact_name">담당자명</Label>
+                  <Input
+                    id="contact_name"
+                    placeholder="홍길동"
+                    {...register("contact_name")}
+                    className="mt-1"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <Label htmlFor="food_category">대표 식품 카테고리</Label>
+                <Select
+                  onValueChange={(v) =>
+                    setValue("food_category", v as string, { shouldValidate: true })
+                  }
+                >
+                  <SelectTrigger id="food_category" className="mt-1">
+                    <SelectValue placeholder="선택하세요" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {FOOD_CATEGORY_OPTIONS.map((opt) => (
+                      <SelectItem key={opt.value} value={opt.value}>
+                        {opt.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
               <div>
                 <Label>
                   관심 수출국 <span className="text-[#EF4444]">*</span>
@@ -263,26 +317,6 @@ export default function LeadCaptureForm() {
                 <div className="mt-4 space-y-6 border-t border-[#E2E8F0] pt-6">
                   {/* 기업 추가 정보 */}
                   <div className="grid gap-4 sm:grid-cols-2">
-                    <div>
-                      <Label htmlFor="business_number">사업자등록번호</Label>
-                      <Input
-                        id="business_number"
-                        placeholder="000-00-00000"
-                        {...register("business_number")}
-                        onChange={(e) => {
-                          const formatted = formatBusinessNumber(e.target.value);
-                          setValue("business_number", formatted);
-                        }}
-                        onBlur={() => trigger("business_number")}
-                        className="mt-1"
-                      />
-                      {errors.business_number && (
-                        <p className="mt-1 text-sm text-[#EF4444]">
-                          {errors.business_number.message}
-                        </p>
-                      )}
-                    </div>
-
                     <div>
                       <Label htmlFor="industry">업종/제품군</Label>
                       <Select
@@ -333,16 +367,6 @@ export default function LeadCaptureForm() {
                   {/* 담당자 정보 */}
                   <div className="grid gap-4 sm:grid-cols-2">
                     <div>
-                      <Label htmlFor="contact_name">담당자명</Label>
-                      <Input
-                        id="contact_name"
-                        placeholder="홍길동"
-                        {...register("contact_name")}
-                        className="mt-1"
-                      />
-                    </div>
-
-                    <div>
                       <Label htmlFor="position">직책</Label>
                       <Input
                         id="position"
@@ -378,7 +402,7 @@ export default function LeadCaptureForm() {
                   <div>
                     <Label>현재 수출 경험</Label>
                     <RadioGroup
-                      value={exportExperience}
+                      value={exportExperience ?? ""}
                       onValueChange={(v) =>
                         setValue(
                           "export_experience",

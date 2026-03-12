@@ -86,6 +86,7 @@ export async function POST(request: NextRequest) {
       industry: data.industry,
       annual_revenue: data.annual_revenue || "",
       contact_name: data.contact_name,
+      food_category: data.food_category || "",
       position: data.position || "",
       email: data.email,
       phone: data.phone,

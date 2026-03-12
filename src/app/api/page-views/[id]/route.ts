@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { updateRowById } from "@/lib/google-sheets";
 
-export async function PATCH(
+async function handleUpdate(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
@@ -32,10 +32,12 @@ export async function PATCH(
 
     return NextResponse.json({ success: true });
   } catch (error) {
-    console.error("Page view PATCH error:", error);
+    console.error("Page view update error:", error);
     return NextResponse.json(
       { success: false, error: "Server error" },
       { status: 500 }
     );
   }
 }
+
+export { handleUpdate as PATCH, handleUpdate as POST };

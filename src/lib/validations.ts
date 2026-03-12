@@ -11,12 +11,13 @@ export const leadSchema = z.object({
       "올바른 사업자등록번호를 입력해주세요"
     ),
   industry: z
-    .enum(["processed_food", "beverage", "health_food", "traditional_food", "other"])
+    .enum(["가공식품", "음료", "건강식품", "전통식품", "기타"])
     .optional(),
   annual_revenue: z
-    .enum(["under_1b", "1b_to_5b", "5b_to_10b", "over_10b"])
+    .enum(["10억 미만", "10억 ~ 50억", "50억 ~ 100억", "100억 이상"])
     .optional(),
   contact_name: z.string().optional(),
+  food_category: z.string().optional(),
   position: z.string().optional(),
   email: z.string().email("올바른 이메일을 입력해주세요"),
   phone: z
@@ -29,7 +30,7 @@ export const leadSchema = z.object({
   target_countries: z
     .array(z.string())
     .min(1, "관심 수출국을 선택해주세요"),
-  export_experience: z.enum(["yes", "no", "preparing"]).optional(),
+  export_experience: z.enum(["yes", "no", "preparing"]).or(z.literal("")).optional(),
   additional_notes: z.string().max(1000, "1000자 이내로 입력해주세요").optional(),
   privacy_consent: z.literal(true, {
     message: "개인정보 수집에 동의해주세요",

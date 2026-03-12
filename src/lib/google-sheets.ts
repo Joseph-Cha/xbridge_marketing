@@ -45,6 +45,7 @@ const SHEET_COLUMNS = {
     "utm_medium",
     "utm_campaign",
     "status",
+    "food_category",
   ],
   utm_sessions: [
     "id",
