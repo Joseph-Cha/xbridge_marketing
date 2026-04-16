@@ -782,3 +782,5 @@ NEXT_PUBLIC_BASE_URL=https://xbridge.co.kr
 ---
 
 *본 PRD는 MARKETING_PLAN.md v2.0을 기반으로 작성되었으며, 구현 진행에 따라 업데이트됩니다.*
+
+
