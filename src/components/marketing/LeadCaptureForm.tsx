@@ -35,6 +35,7 @@ import {
 } from "@/constants/form-options";
 import { leadSchema, type LeadFormValues } from "@/lib/validations";
 import { fadeInUp, staggerContainer } from "@/lib/animations";
+import { gtagReportConversion } from "@/lib/gtag";
 import Link from "next/link";
 
 function formatBusinessNumber(value: string): string {
@@ -110,6 +111,7 @@ export default function LeadCaptureForm() {
       });
 
       if (res.status === 201) {
+        gtagReportConversion();
         router.push("/thank-you");
         return;
       }
