@@ -1,11 +1,16 @@
 "use client";
 
+import { useEffect } from "react";
 import { motion } from "framer-motion";
 import { CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
 export default function ThankYouPage() {
+  useEffect(() => {
+    window.fbq?.("track", "Lead");
+  }, []);
+
   return (
     <div className="flex min-h-screen items-center justify-center bg-[#F8FAFC] px-4">
       <motion.div
